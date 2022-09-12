@@ -3,7 +3,36 @@ import { FaAngleDoubleRight } from 'react-icons/fa'
 // ATTENTION!!!!!!!!!!
 // I SWITCHED TO PERMANENT DOMAIN
 const url = 'https://course-api.com/react-tabs-project'
+
 function App() {
+  const[jobs, setJobs] = useState([]);
+  const[loading, setLoading] = useState(false);
+  const[value, setValue] = useState(0);
+
+  const fetchJobs = async () => {
+    setLoading(true)
+    try {
+      const response = await fetch(url)
+      const newJobs = response.json
+      setJobs(newJobs)
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+    }
+  };
+
+  useEffect(() => {
+    fetchJobs();
+  }, [])
+
+  if(loading) {
+    return (
+      <section className='section loading'>
+        <h1>loading...</h1>
+      </section>
+    )
+  }
+
   return <h2>tabs project setup</h2>
 }
 
